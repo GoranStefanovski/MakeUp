@@ -17,7 +17,7 @@ for image in os.listdir(images):
     args = parser.parse_args()
 
 
-    n += 0
+    n += 1
     def preprocess(img):
         return (img / 255. - 0.5) * 2
 
