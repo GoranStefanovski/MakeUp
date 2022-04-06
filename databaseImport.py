@@ -25,3 +25,4 @@ query = 'INSERT INTO images VALUES(%s, %s)'
 # Execute the query and commit the database.
 cursor.execute(query,args)
 mydb.commit()
+
