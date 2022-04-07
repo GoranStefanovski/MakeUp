@@ -8,34 +8,45 @@ import os
 import glob
 from imageio import imread, imsave
 import cv2
-import argparse
 import io
 from io import BytesIO
 import PIL.Image
 from PIL import Image
 import pymysql
-import numpy
 import mysql.connector
-# from api import mysql
 
 n = 1
-images = 'imgs/no_makeup/'
+# Fill the credentials of the database
+config = {
+    'user': 'root',
+    'password': '123456',
+    'host': '127.0.0.1',
+    'database': 'makeup',
+}
 
-mydb = mysql.connector.connect(user='root',password="Password12#", host='127.0.0.1', database='MakeUp')
+mydb = mysql.connector.connect(**config)
 
 # Create a cursor object
 cursor = mydb.cursor()
-query1 = 'SELECT * FROM images'
+
+#Inert the database fields
+table_name = 'pictures'
+id_collumn_name = 'image_id'
+collumn_name = 'image'
+
+query1 = 'SELECT * FROM ' + table_name
+
 cursor.execute(query1)
 
 numberOfPictures = cursor.fetchall()
 
 
-# for image in os.listdir(images):
 for n in range(1,len(numberOfPictures)+1):
 
     # Prepare the query
-    query = "select images from images WHERE image_id = " + str(n)
+    
+
+    query = "SELECT " + collumn_name + " FROM " + table_name + " WHERE " + id_collumn_name + " = " + str(n)
 
     # Execute the query to get the file
     cursor.execute(query)
@@ -51,9 +62,11 @@ for n in range(1,len(numberOfPictures)+1):
     # Convert the bytes into a PIL image
     image = Image.open(io.BytesIO(binary_data))
 
-    image.show()
-    image = numpy.array(image)
+    # image.show()
+    # Convert the PIL image into a numpy array
+    image = np.array(image)
 
+    #Processing the picture
     def preprocess(img):
         return (img / 255. - 0.5) * 2
 
@@ -88,5 +101,5 @@ for n in range(1,len(numberOfPictures)+1):
         result[:img_size, (i + 1) * img_size: (i + 2) * img_size] = makeup / 255.
         result[img_size: 2 * img_size, (i + 1) * img_size: (i + 2) * img_size] = Xs_[0]
 
-        imsave(str(n)+'result.jpg', result)
+        imsave(str(n)+'_result.jpg', result)
     n += 1
