@@ -21,3 +21,9 @@ After downloading put all 4 files in the model folder
 ## Database imports
 
 You can use the databaseImport.py to insert the pictures correctly in the database 
+ 
+ ## Import Images To Database
+ - python3 databaseImport.py
+
+ ## Start App
+ - python3 main.py
