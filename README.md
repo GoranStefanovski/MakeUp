@@ -1,5 +1,8 @@
 # MakeUp
+## Install Mysql/Workbench
+https://dev.mysql.com/downloads/installer/ mysql download
 
+https://dev.mysql.com/downloads/workbench/ workbench download
 
 ## Install Python 
 https://www.python.org/downloads/release/python-3104/ python download 
